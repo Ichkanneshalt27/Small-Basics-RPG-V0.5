@@ -17,8 +17,8 @@ Stats["Lvl"] = 1
 
 Ebene["Flag"] = 1
 Ebene["Stage"] = 1
-Ebene[1] = 1 '3
-Ebene[2] = 1 '6
+Ebene[1] = 13
+Ebene[2] = 16
 Ebene[3] = 17
 
 Player:
@@ -427,8 +427,8 @@ Sub aktion
     TextWindow.WriteLine(Player["Name"] + " regeneriert 10 Mana")
     TextWindow.WriteLine("")
     Stats["Mana"] = Stats["Mana"] + 10
-    If Stats["Mana"] > 50 then  
-      Stats["Mana"] = 50
+    If Stats["Mana"] > Stats["MaxMana"] then  
+      Stats["Mana"] = Stats["MaxMana"]
     EndIf
     TextWindow.WriteLine("")
     TextWindow.WriteLine("Das Monster greift " + Player["Name"] + " an")

@@ -8,9 +8,9 @@ Stats["MaxHp"] = 100
 Stats["Mana"] = 50
 Stats["MaxMana"] = 50
 Stats["Angriff"] = 4
+Stats["Block"] = 3
 Stats["Feuerball"] = 10
 Stats["Heilung"] = 15
-Stats["Block"] = 4
 Stats["Xp"] = 0
 Stats["mXp"] = 60
 Stats["Lvl"] = 1
@@ -38,209 +38,7 @@ Program.Delay(100)
 TextWindow.WriteLine("Du startest dein Arbentuer in einem alten Verlies")
 TextWindow.WriteLine("")
 
-aktion()
-
-
-
-Sub Monster1
-  Monster["Farbe"] = "Grüner"
-  Monster["Name"] = "Ork"
-  Monster["Hp"] = 10
-  Monster["MaxHp"] = 10
-  Monster["Angriff"] = 4
-  Monster["Weglaufen"] = 2
-  Monster["Xp"] = 3
-EndSub
-
-Sub Monster2
-  Monster["Farbe"] = "Grüner"
-  Monster["Name"] = "Schleim"
-  Monster["Hp"] = 15
-  Monster["MaxHp"] = 15
-  Monster["Angriff"] = 3
-  Monster["Weglaufen"] = 3
-  Monster["Xp"] = 5
-EndSub
-
-Sub Monster3
-  Monster["Farbe"] = "Roter"
-  Monster["Name"] = "Ork"
-  Monster["Hp"] = 13
-  Monster["MaxHp"] = 13
-  Monster["Angriff"] = 6
-  Monster["Weglaufen"] = 4
-  Monster["Xp"] = 6
-EndSub
-
-Sub Monster4
-  Monster["Farbe"] = "Altes"
-  Monster["Name"] = "Skellet"
-  Monster["Hp"] = 6
-  Monster["MaxHp"] = 6
-  Monster["Angriff"] = 8
-  Monster["Weglaufen"] = 5
-  Monster["Xp"] = 8
-EndSub
-
-Sub Monster5
-  Monster["Farbe"] = ""
-  Monster["Name"] = "Skellet mit Bogen"
-  Monster["Hp"] = 8
-  Monster["MaxHp"] = 8
-  Monster["Angriff"] = 10
-  Monster["Weglaufen"] = 12
-  Monster["Xp"] = 10
-EndSub
-
-Sub Monster6
-  Monster["Farbe"] = "Böses"
-  Monster["Name"] = "Schaf"
-  Monster["Hp"] = 14
-  Monster["MaxHp"] = 14
-  Monster["Angriff"] = 5
-  Monster["Weglaufen"] = 2
-  Monster["Xp"] = 6
-EndSub
-
-Sub Monster7
-  Monster["Farbe"] = "Verlies"
-  Monster["Name"] = "Zombie"
-  Monster["Hp"] = 20
-  Monster["MaxHp"] = 20
-  Monster["Angriff"] = 5
-  Monster["Weglaufen"] = 0
-  Monster["Xp"] = 9
-EndSub
-
-Sub Monster8
-  Monster["Farbe"] = "Böser"
-  Monster["Name"] = "Siedler"
-  Monster["Hp"] = 12
-  Monster["MaxHp"] = 12
-  Monster["Angriff"] = 7
-  Monster["Weglaufen"] = 5
-  Monster["Xp"] = 7
-EndSub
-
-Sub Monster9
-  Monster["Farbe"] = "Wilder"
-  Monster["Name"] = "Tjorben"
-  Monster["Hp"] = 10
-  Monster["MaxHp"] = 10
-  Monster["Angriff"] = 9
-  Monster["Weglaufen"] = 1
-  Monster["Xp"] = 9
-EndSub
-
-Sub Monster10
-  Monster["Farbe"] = "Blauer"
-  Monster["Name"] = "Ork"
-  Monster["Hp"] = 17
-  Monster["MaxHp"] = 17
-  Monster["Angriff"] = 8
-  Monster["Weglaufen"] = 8
-  Monster["Xp"] = 10
-EndSub
-
-Sub Monster11
-  Monster["Farbe"] = "Uhr altes"
-  Monster["Name"] = "Skellet"
-  Monster["Hp"] = 7
-  Monster["MaxHp"] = 7
-  Monster["Angriff"] = 12
-  Monster["Weglaufen"] = 6
-  Monster["Xp"] = 8
-EndSub
-
-Sub Monster12
-  Monster["Farbe"] = "Böses"
-  Monster["Name"] = "Schaf"
-  Monster["Hp"] = 14
-  Monster["MaxHp"] = 14
-  Monster["Angriff"] = 5
-  Monster["Weglaufen"] = 2
-  Monster["Xp"] = 6
-EndSub
-
-Sub RandoMon
-  Boss["Flag"] = 0
-  If Ebene["Flag"] = 1 Then
-  Mo = Math.GetRandomNumber(6)
-  If Mo = 1 Then
-    Monster1()
-  ElseIf Mo = 2 then  
-    Monster2()
-  Elseif Mo = 3 then  
-    Monster3()
-  Elseif Mo = 4 then  
-    Monster4()
-  Elseif Mo = 5 then
-    Monster5()
-  Elseif Mo = 6 then
-    Monster6()
-  EndIf
-  EndIf
-  
-  If Ebene["Flag"] = 2 Then
-    Mo = Math.GetRandomNumber(7)
-      If Mo = 1 Then
-    Monster5()
-      ElseIf Mo = 2 then  
-    Monster7()
-      Elseif Mo = 3 then  
-    Monster8()
-      Elseif Mo = 4 then  
-    Monster9()
-      Elseif Mo = 5 then
-    Monster3()
-      Elseif Mo = 6 then
-    Monster10()
-      Elseif Mo = 7 then
-    Monster11()
-     EndIf
-    
-  If Ebene["Flag"] = 3 Then
-    Mo = Math.GetRandomNumber(6)
-      
-    EndIf
-  EndIf
-EndSub
-
-Sub Boss1
-  Monster["Farbe"] = "Riesiger"
-  Monster["Name"] = "Ork"
-  Monster["Hp"] = 4 '6
-  Monster["MaxHp"] = 46
-  Monster["Angriff"] = 6 + Stats["Lvl"]
-  Monster["Weglaufen"] = 100000
-  Monster["Xp"] = 20
-  Boss["Flag"] = 1
-  Ebene["Flag"] = Ebene["Flag"] + 1
-  Ebene[1] = 1
-  Ebene["Stage"] = 2
-EndSub
-
-Sub Boss2
-  Monster["Farbe"] = "100 Jahre alter"
-  Monster["Name"] = "Vampier"
-  Monster["Hp"] = 78
-  Monster["MaxHp"] = 78
-  Monster["Angriff"] = 6 + Stats["Lvl"]
-  Monster["Weglaufen"] = 100000
-  Monster["Xp"] = 40
-  Boss["Flag"] = 2
-  Ebene["Flag"] = Ebene["Flag"] + 1
-  Ebene[2] = 1
-  Ebene["Stage"] = 3
-EndSub
-
-Sub Boss3
-  
-EndSub
-
-Sub aktion
-  
-  aktweg:
+aktweg:
   
   If Ebene["Stage"] = 2 Then
     TextWindow.WriteLine("")
@@ -481,6 +279,203 @@ Sub aktion
     TextWindow.WriteLine("")
     Goto aktloop
   EndIf
+  
+'----------------------------------------------------------------
+
+Sub Monster1
+  Monster["Farbe"] = "Grüner"
+  Monster["Name"] = "Ork"
+  Monster["Hp"] = 10
+  Monster["MaxHp"] = 10
+  Monster["Angriff"] = 4
+  Monster["Weglaufen"] = 2
+  Monster["Xp"] = 3
+EndSub
+
+Sub Monster2
+  Monster["Farbe"] = "Grüner"
+  Monster["Name"] = "Schleim"
+  Monster["Hp"] = 15
+  Monster["MaxHp"] = 15
+  Monster["Angriff"] = 3
+  Monster["Weglaufen"] = 3
+  Monster["Xp"] = 5
+EndSub
+
+Sub Monster3
+  Monster["Farbe"] = "Roter"
+  Monster["Name"] = "Ork"
+  Monster["Hp"] = 13
+  Monster["MaxHp"] = 13
+  Monster["Angriff"] = 6
+  Monster["Weglaufen"] = 4
+  Monster["Xp"] = 6
+EndSub
+
+Sub Monster4
+  Monster["Farbe"] = "Altes"
+  Monster["Name"] = "Skellet"
+  Monster["Hp"] = 6
+  Monster["MaxHp"] = 6
+  Monster["Angriff"] = 8
+  Monster["Weglaufen"] = 5
+  Monster["Xp"] = 8
+EndSub
+
+Sub Monster5
+  Monster["Farbe"] = ""
+  Monster["Name"] = "Skellet mit Bogen"
+  Monster["Hp"] = 8
+  Monster["MaxHp"] = 8
+  Monster["Angriff"] = 10
+  Monster["Weglaufen"] = 12
+  Monster["Xp"] = 10
+EndSub
+
+Sub Monster6
+  Monster["Farbe"] = "Böses"
+  Monster["Name"] = "Schaf"
+  Monster["Hp"] = 14
+  Monster["MaxHp"] = 14
+  Monster["Angriff"] = 5
+  Monster["Weglaufen"] = 2
+  Monster["Xp"] = 6
+EndSub
+
+Sub Monster7
+  Monster["Farbe"] = "Verlies"
+  Monster["Name"] = "Zombie"
+  Monster["Hp"] = 20
+  Monster["MaxHp"] = 20
+  Monster["Angriff"] = 5
+  Monster["Weglaufen"] = 0
+  Monster["Xp"] = 9
+EndSub
+
+Sub Monster8
+  Monster["Farbe"] = "Böser"
+  Monster["Name"] = "Siedler"
+  Monster["Hp"] = 12
+  Monster["MaxHp"] = 12
+  Monster["Angriff"] = 7
+  Monster["Weglaufen"] = 5
+  Monster["Xp"] = 7
+EndSub
+
+Sub Monster9
+  Monster["Farbe"] = "Wilder"
+  Monster["Name"] = "Tjorben"
+  Monster["Hp"] = 10
+  Monster["MaxHp"] = 10
+  Monster["Angriff"] = 9
+  Monster["Weglaufen"] = 1
+  Monster["Xp"] = 9
+EndSub
+
+Sub Monster10
+  Monster["Farbe"] = "Blauer"
+  Monster["Name"] = "Ork"
+  Monster["Hp"] = 17
+  Monster["MaxHp"] = 17
+  Monster["Angriff"] = 8
+  Monster["Weglaufen"] = 8
+  Monster["Xp"] = 10
+EndSub
+
+Sub Monster11
+  Monster["Farbe"] = "Uhr altes"
+  Monster["Name"] = "Skellet"
+  Monster["Hp"] = 7
+  Monster["MaxHp"] = 7
+  Monster["Angriff"] = 12
+  Monster["Weglaufen"] = 6
+  Monster["Xp"] = 8
+EndSub
+
+Sub Monster12
+  Monster["Farbe"] = "Böses"
+  Monster["Name"] = "Schaf"
+  Monster["Hp"] = 14
+  Monster["MaxHp"] = 14
+  Monster["Angriff"] = 5
+  Monster["Weglaufen"] = 2
+  Monster["Xp"] = 6
+EndSub
+
+Sub RandoMon
+  Boss["Flag"] = 0
+  If Ebene["Flag"] = 1 Then
+  Mo = Math.GetRandomNumber(6)
+  If Mo = 1 Then
+    Monster1()
+  ElseIf Mo = 2 then  
+    Monster2()
+  Elseif Mo = 3 then  
+    Monster3()
+  Elseif Mo = 4 then  
+    Monster4()
+  Elseif Mo = 5 then
+    Monster5()
+  Elseif Mo = 6 then
+    Monster6()
+  EndIf
+  EndIf
+  
+  If Ebene["Flag"] = 2 Then
+    Mo = Math.GetRandomNumber(7)
+      If Mo = 1 Then
+    Monster5()
+      ElseIf Mo = 2 then  
+    Monster7()
+      Elseif Mo = 3 then  
+    Monster8()
+      Elseif Mo = 4 then  
+    Monster9()
+      Elseif Mo = 5 then
+    Monster3()
+      Elseif Mo = 6 then
+    Monster10()
+      Elseif Mo = 7 then
+    Monster11()
+     EndIf
+    
+  If Ebene["Flag"] = 3 Then
+    Mo = Math.GetRandomNumber(6)
+      
+    EndIf
+  EndIf
+EndSub
+
+Sub Boss1
+  Monster["Farbe"] = "Riesiger"
+  Monster["Name"] = "Ork"
+  Monster["Hp"] = 46
+  Monster["MaxHp"] = 46
+  Monster["Angriff"] = 6 + Stats["Lvl"]
+  Monster["Weglaufen"] = 100000
+  Monster["Xp"] = 20
+  Boss["Flag"] = 1
+  Ebene["Flag"] = Ebene["Flag"] + 1
+  Ebene[1] = 1
+  Ebene["Stage"] = 2
+EndSub
+
+Sub Boss2
+  Monster["Farbe"] = "100 Jahre alter"
+  Monster["Name"] = "Vampier"
+  Monster["Hp"] = 78
+  Monster["MaxHp"] = 78
+  Monster["Angriff"] = 6 + Stats["Lvl"]
+  Monster["Weglaufen"] = 100000
+  Monster["Xp"] = 40
+  Boss["Flag"] = 2
+  Ebene["Flag"] = Ebene["Flag"] + 1
+  Ebene[2] = 1
+  Ebene["Stage"] = 3
+EndSub
+
+Sub Boss3
+  
 EndSub
 
 End1:

@@ -475,7 +475,17 @@ Sub Boss2
 EndSub
 
 Sub Boss3
-  
+  Monster["Farbe"] = "Placeholder"
+  Monster["Name"] = "Meow"
+  Monster["Hp"] = 1
+  Monster["MaxHp"] = 1
+  Monster["Angriff"] = 1 + Stats["Lvl"]
+  Monster["Weglaufen"] = 100000
+  Monster["Xp"] = 1
+  Boss["Flag"] = 2
+  Ebene["Flag"] = Ebene["Flag"] + 1
+  Ebene[3] = 1
+  Ebene["Stage"] = 4
 EndSub
 
 End1:

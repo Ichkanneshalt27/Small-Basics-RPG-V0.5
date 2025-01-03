@@ -1,3 +1,6 @@
+' https://ebio.gg/@Nia
+' https://github.com/Ichkanneshalt27
+
 TextWindow.Title = "Small RPG Basics"
 TextWindow.Left = 5
 TextWindow.Top = 280
@@ -23,6 +26,8 @@ Ebene[1] = 13
 Ebene[2] = 16
 Ebene[3] = 17
 
+'Placeholder()
+
 Player:
 
 Program.Delay(100)
@@ -41,9 +46,15 @@ Program.Delay(100)
 
 TextWindow.WriteLine("Du startest dein Arbentuer in einem alten Verlies")
 
-aktloop:
+RandoMon()
+TextWindow.WriteLine("") 
+TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
 
-If Ebene["Stage"] = 2 Then
+aktloop:
+  
+  If Monster["Hp"] <= 0 then  
+    
+    If Ebene["Stage"] = 2 Then
     TextWindow.WriteLine("")
     TextWindow.WriteLine("Du hast den Boss der ersten Ebene besiegt!")
     TextWindow.WriteLine("Du ruhst dich etwas aus!")
@@ -55,6 +66,9 @@ If Ebene["Stage"] = 2 Then
     Endif 
     TextWindow.WriteLine("")
     TextWindow.WriteLine("Du gehst in die nächste Ebene. Grünes Verlies Teil")
+    TextWindow.WriteLine("")
+    RandoMon()
+    TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
     Ebene["Stage"] = 1
   ElseIf Ebene["Stage"] = 3 then  
     TextWindow.WriteLine("")
@@ -68,12 +82,11 @@ If Ebene["Stage"] = 2 Then
     Endif 
     TextWindow.WriteLine("")
     TextWindow.WriteLine("Du gehst in die nächste Ebene. Sumpfiges Verlies Teil")
+    TextWindow.WriteLine("")
+    RandoMon()
+    TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
     Ebene["Stage"] = 1
-  EndIf
-  
-  'Boss check nach besiegen
-  
-  If Monster["Hp"] <= 0 then  
+    else  
     TextWindow.WriteLine(Player["Name"] + " hat " + Monster["Farbe"] + " " + Monster["Name"] + " besiegt")
     TextWindow.WriteLine(Player["Name"] + " bekommt " + Monster["Xp"] + "Xp")
     Stats["Xp"] = Stats["Xp"] + Monster["Xp"]
@@ -102,9 +115,43 @@ If Ebene["Stage"] = 2 Then
     TextWindow.WriteLine("")
     TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
     EndIf
+  
+    If Ebene["Flag"] = 1 then 
+      Ebene[1] = Ebene[1] - 1
+    ElseIf Ebene["Flag"] = 2 Then 
+      Ebene[2] = Ebene[2] - 1
+    Elseif Ebene["Flag"] = 3 Then 
+      Ebene[3] = Ebene[3] - 1 
+    EndIf
+    
+    If Ebene["Stage"] = 1 then 
+     If Ebene[1] = 0 then
+      ElseIf Ebene[1] > 0 then 
+        TextWindow.WriteLine("")
+        TextWindow.WriteLine("Es sind noch " + Ebene[1] + " Monster auf dieser Ebene")
+        Endif 
+      Endif  
+      
+   If Ebene[1] = -1 then 
+    If Ebene[2] = 0 then
+     ElseIf Ebene[2] > 0 then 
+      TextWindow.WriteLine("")
+      TextWindow.WriteLine("Es sind noch " + Ebene[2] + " Monster auf dieser Ebene")
+      Endif 
+    Endif  
+   EndIf
+    
+  If Ebene[2] = -1 Then
+   If Ebene[3] = 0 then
+    ElseIf Ebene[3] > 0 then 
+     TextWindow.WriteLine("")
+     TextWindow.WriteLine("Es sind noch " + Ebene[3] + " Monster auf dieser Ebene")
+     Endif
+   Endif  
   Endif 
 
-' Monster für jeweilige Ebene
+' https://ebio.gg/@Nia
+' https://github.com/Ichkanneshalt27
   
   If Stats["Hp"] <= 0 Then
     TextWindow.WriteLine(Player["Name"] + " hat keine Hp mehr")
@@ -123,31 +170,14 @@ If Ebene["Stage"] = 2 Then
     Else 
     Program.End()
     endif 
-    If Ebene["Flag"] = 1 then 
-      Ebene[1] = Ebene[1] - 1
-    ElseIf Ebene["Flag"] = 2 Then 
-      Ebene[2] = Ebene[2] - 1
-    Elseif Ebene["Flag"] = 3 Then 
-      Ebene[3] = Ebene[3] - 1 
-    EndIf
-    If Ebene[1] = 0 Then  
-    
-    Else  
-     TextWindow.WriteLine("")
-     TextWindow.WriteLine("Es sind noch " + Ebene[1] + " Monster auf dieser Ebene")
-     TextWindow.WriteLine("")
-     RandoMon()
-     TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
-     TextWindow.WriteLine("")
-     Endif  
   EndIf
   
   If Ebene[1] = 0 then  
     TextWindow.WriteLine("")
-    TextWindow.WriteLine("Der Boss der ersten Ebene erscheint!")
+    TextWindow.WriteLine("Boss der ersten Ebene erscheint!")
     TextWindow.WriteLine("")
     Boss1()
-    TextWindow.WriteLine("Boss " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
+    TextWindow.WriteLine("Boss " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
     Goto Booss
   Endif
   
@@ -156,7 +186,7 @@ If Ebene["Stage"] = 2 Then
     TextWindow.WriteLine("Der Boss der zweiten Ebene erscheint!")
     TextWindow.WriteLine("")
     Boss2()
-    TextWindow.WriteLine("Boss " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
+    TextWindow.WriteLine("Boss " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
     Goto Booss
   EndIf
   
@@ -169,10 +199,13 @@ If Ebene["Stage"] = 2 Then
     Boss3()
     Goto End1
   EndIf
-    
+  
+  ' Boss besiegt ->> nächste Ebene check
+  
     Booss:
   
   Program.Delay(100)
+  TextWindow.WriteLine("")
   TextWindow.WriteLine(Player["Name"] + " was willst du tun?")
   TextWindow.WriteLine("")
   TextWindow.WriteLine("'Angriff")
@@ -304,7 +337,7 @@ If Ebene["Stage"] = 2 Then
   Elseif  Akt = "Status" then
     TextWindow.WriteLine("Name: " + Player["Name"])
     TextWindow.WriteLine("Lvl: " + Stats["Lvl"])
-    TextWindow.WriteLine("Hp:" + Stats["HP"] + "/" + Stats["MaxHp"])
+    TextWindow.WriteLine("Hp: " + Stats["HP"] + "/" + Stats["MaxHp"])
     TextWindow.WriteLine("Mana: " + Stats["Mana"] + "/" + Stats["MaxMana"])
     TextWindow.WriteLine("Stärke: " + Stats["Angriff"])
     TextWindow.WriteLine("Block: " + Stats["Block"])
@@ -346,7 +379,7 @@ If Ebene["Stage"] = 2 Then
     TextWindow.WriteLine("")
     Goto aktloop
   EndIf
-  
+
 '----------------------------------------------------------------
 
 Sub Monster1
@@ -460,8 +493,8 @@ Sub Monster11
 EndSub
 
 Sub Monster12
-  Monster["Farbe"] = "Böses"
-  Monster["Name"] = "Schaf"
+  Monster["Farbe"] = "Böser"
+  Monster["Name"] = "Demon"
   Monster["Hp"] = 20
   Monster["MaxHp"] = 20
   Monster["Angriff"] = 8
@@ -480,27 +513,27 @@ Sub Monster13
 EndSub
 
 Sub Monster14
-  Monster["Farbe"] = "Grüner"
-  Monster["Name"] = "Ork"
-  Monster["Hp"] = 12
-  Monster["MaxHp"] = 12
-  Monster["Angriff"] = 4
-  Monster["Weglaufen"] = 2
-  Monster["Xp"] = 3
+  Monster["Farbe"] = "schneller"
+  Monster["Name"] = "Bandit"
+  Monster["Hp"] = 22
+  Monster["MaxHp"] = 22
+  Monster["Angriff"] = 8
+  Monster["Weglaufen"] = 12
+  Monster["Xp"] = 12
 EndSub
 
 Sub Monster15
-  Monster["Farbe"] = "Grüner"
-  Monster["Name"] = "Ork"
-  Monster["Hp"] = 12
-  Monster["MaxHp"] = 12
-  Monster["Angriff"] = 4
-  Monster["Weglaufen"] = 2
-  Monster["Xp"] = 3
+  Monster["Farbe"] = "Stein"
+  Monster["Name"] = "Golem"
+  Monster["Hp"] = 40
+  Monster["MaxHp"] = 40
+  Monster["Angriff"] = 6
+  Monster["Weglaufen"] = 0
+  Monster["Xp"] = 14
 EndSub
 
 Sub Monster16
-  Monster["Farbe"] = "Grüner"
+  Monster["Farbe"] = "-"
   Monster["Name"] = "Ork"
   Monster["Hp"] = 12
   Monster["MaxHp"] = 12
@@ -510,7 +543,7 @@ Sub Monster16
 EndSub
 
 Sub Monster17
-  Monster["Farbe"] = "Grüner"
+  Monster["Farbe"] = "-"
   Monster["Name"] = "Ork"
   Monster["Hp"] = 12
   Monster["MaxHp"] = 12
@@ -570,6 +603,21 @@ EndSub
 'Bosses können Angreifen und Blocken 
 'Manche Gegner können Zauber wirken
 
+Sub enemyatt
+  Roll = Math.GetRandomNumber(10)
+  If Roll = 1 Then
+  ElseIf Roll = 2 then  
+  ElseIf Roll = 3 then  
+  ElseIf Roll = 4 then  
+  ElseIf Roll = 5 then  
+  ElseIf Roll = 6 then  
+  ElseIf Roll = 7 then  
+  ElseIf Roll = 8 then  
+  ElseIf Roll = 9 then  
+  ElseIf Roll = 10 then 
+  EndIf
+EndSub
+
 Sub RandoMon
   Boss["Flag"] = 0
   If Ebene["Flag"] = 1 Then
@@ -605,23 +653,34 @@ Sub RandoMon
     Monster10()
       Elseif Mo = 7 then
     Monster11()
-     EndIf
+  EndIf
+  EndIf
     
   If Ebene["Flag"] = 3 Then
-    Mo = Math.GetRandomNumber(6)
+    Mo = Math.GetRandomNumber(9)
     If Mo = 1 Then
-    Placeholder()
+    Monster12()
   ElseIf Mo = 2 then  
-    Placeholder()
+    Monster5()
+    Monster["Hp"] = Monster["Hp"] + 8
+    Monster["MaxHp"] = Monster["MaxHp"] + 8
+    Monster["Angriff"] = Monster["Angriff"] + 4
+    Monster["Weglaufen"] = Monster["Weglaufen"] + 10
+    Monster["Xp"] = Monster["Xp"] + 5
   Elseif Mo = 3 then  
-    Placeholder()
+    Monster10()
   Elseif Mo = 4 then  
-    Placeholder()
+    Monster13()
   Elseif Mo = 5 then
-    Placeholder()
+    Monster20()
   Elseif Mo = 6 then
-    Placeholder()
-  EndIf
+    Monster18()
+  Elseif Mo = 7 then
+    Monster14()
+  Elseif Mo = 8 then
+    Monster15()
+  Elseif Mo = 9 then
+    Monster19()
     EndIf
   EndIf
 EndSub
@@ -635,8 +694,8 @@ Sub Boss1
   Monster["Weglaufen"] = 100000
   Monster["Xp"] = 20
   Boss["Flag"] = 1
-  Ebene["Flag"] = Ebene["Flag"] + 1
-  Ebene[1] = 1
+  Ebene["Flag"] = 2
+  Ebene[1] = -1
   Ebene["Stage"] = 2
 EndSub
 
@@ -649,8 +708,8 @@ Sub Boss2
   Monster["Weglaufen"] = 100000
   Monster["Xp"] = 40
   Boss["Flag"] = 2
-  Ebene["Flag"] = Ebene["Flag"] + 1
-  Ebene[2] = 1
+  Ebene["Flag"] = 3
+  Ebene[2] = -1
   Ebene["Stage"] = 3
 EndSub
 
@@ -663,9 +722,12 @@ Sub Boss3
   Monster["Weglaufen"] = 100000
   Monster["Xp"] = 1
   Boss["Flag"] = 3
-  Ebene["Flag"] = Ebene["Flag"] + 1
-  Ebene[3] = 1
+  Ebene["Flag"] = 4
+  Ebene[3] = -1
   Ebene["Stage"] = 4
 EndSub
 
 End1:
+
+' https://ebio.gg/@Nia
+' https://github.com/Ichkanneshalt27

@@ -1,3 +1,8 @@
+README
+
+Importend: You need to download the exe and dll file for the game to working. (Both need to be in the same folder)
+The sb file is just small basic file format + there if you want to chekc the code.
+
 This is a small not finished RPG in small basics
 
 The Game should work now fine as it is.

@@ -16,7 +16,7 @@ Stats["Block"] = 3
 Stats["Feuerball"] = 8
 Stats["Heilung"] = 15
 Stats["Xp"] = 0
-Stats["mXp"] = 60
+Stats["mXp"] = 56
 Stats["Lvl"] = 1
 
 Ebene["Flag"] = 1
@@ -27,6 +27,7 @@ Ebene[2] = 16
 Ebene[3] = 17
 Ebene[4] = 20
 Ebene[5] = 27
+Ebene[6] = 29
 
 Player:
 
@@ -46,11 +47,11 @@ endif
 Program.Delay(100)
 
 TextWindow.ForegroundColor = "White"
-TextWindow.WriteLine("Du startest dein Arbentuer in einem alten Verlies")
+TextWindow.WriteLine("Du startest dein Arbentuer in einem alten Verlies.")
 
 RandoMon()
 TextWindow.WriteLine("") 
-TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
+TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint.")
 
 aktloop:
 
@@ -111,6 +112,34 @@ If Monster["Hp"] <= 0 then
     RandoMon()
     TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
     Ebene["Stage"] = 1
+  Elseif Ebene["Stage"] = 5 then
+    TextWindow.WriteLine("")
+    TextWindow.WriteLine("Du hast den Boss der vierten Ebene besiegt!")
+    TextWindow.WriteLine("Du ruhst dich etwas aus!")
+    TextWindow.WriteLine("Du wirst mit 50% deiner Max Hp geheilt!")
+    Boss["Flag"] = 0
+    Stats["Mana"] = Stats["Mana"] + 50
+    Ausruhen = Stats["MaxHp"] / 2
+    Stats["Hp"] = Stats["Hp"] + Ausruhen
+    If Stats["Hp"] > Stats["MaxHp"] then  
+      Stats["Hp"] = Stats["MaxHp"]
+    Endif 
+    TextWindow.WriteLine("")
+    TextWindow.WriteLine("Du gehst in die nächste Ebene. Pechschwarzes Verlies Teil")
+    TextWindow.WriteLine("")
+    RandoMon()
+    TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
+    Ebene["Stage"] = 1
+  Elseif Ebene["Stage"] = 6 then
+    TextWindow.WriteLine("")
+    TextWindow.WriteLine("Du hast den Endboss besiegt!")
+    TextWindow.WriteLine("")
+    TextWindow.WriteLine("Herzlichen Glückwunsch!")
+    TextWindow.WriteLine("Du hast das Spiel durch!")
+    TextWindow.WriteLine("Toll gemacht!")
+    TextWindow.WriteLine("Schau doch auf: https://ebio.gg/@Nia vorbei")
+    TextWindow.WriteLine("")
+    Program.Delay(500000)
   else  
     TextWindow.WriteLine("")
     TextWindow.WriteLine(Player["Name"] + " hat " + Monster["Farbe"] + " " + Monster["Name"] + " besiegt")
@@ -120,8 +149,8 @@ If Monster["Hp"] <= 0 then
       TextWindow.WriteLine("")
       TextWindow.WriteLine(Player["Name"] + " ist ein Level aufgestiegen!")
       TextWindow.WriteLine(Player["Name"] + "'s werte sind gestiegen!")
-      Stats["Hp"] = Stats["Hp"] + 5
-      Stats["MaxHp"] = Stats["MaxHp"] + 5
+      Stats["Hp"] = Stats["Hp"] + 6
+      Stats["MaxHp"] = Stats["MaxHp"] + 6
       Stats["Mana"] = Stats["Mana"] + 5
       Stats["MaxMana"] = Stats["MaxMana"] + 5
       Stats["Angriff"] = Stats["Angriff"] + 1
@@ -132,6 +161,7 @@ If Monster["Hp"] <= 0 then
       Stats["mXp"] = Stats["mXp"] + 4 + Stats["Lvl"]
       Stats["Lvl"] = Stats["Lvl"] + 1
     EndIf
+    
     If Ebene["Flag"] = 1 Then
       RandoMon()
       TextWindow.WriteLine("")
@@ -148,6 +178,14 @@ If Monster["Hp"] <= 0 then
       RandoMon()
       TextWindow.WriteLine("")
       TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
+    ElseIf Ebene["Flag"] = 5 Then 
+      RandoMon()
+      TextWindow.WriteLine("")
+      TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
+    ElseIf Ebene["Flag"] = 6 Then 
+      RandoMon()
+      TextWindow.WriteLine("")
+      TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
     EndIf
     
     If Ebene["Flag"] = 1 then 
@@ -158,6 +196,10 @@ If Monster["Hp"] <= 0 then
       Ebene[3] = Ebene[3] - 1 
     ElseIf Ebene["Flag"] = 4 Then
       Ebene[4] = Ebene[4] - 1
+    ElseIf Ebene["Flag"] = 4 Then
+      Ebene[5] = Ebene[5] - 1
+    ElseIf Ebene["Flag"] = 4 Then
+      Ebene[6] = Ebene[6] - 1
     EndIf
     
     If Ebene["Stage"] = 1 then 
@@ -194,6 +236,21 @@ If Ebene[3] = -1 Then
   Endif
 Endif  
 
+If Ebene[4] = -1 Then
+  If Ebene[5] = 0 then
+  ElseIf Ebene[5] > 0 then 
+    TextWindow.WriteLine("")
+    TextWindow.WriteLine("Es sind noch " + Ebene[5] + " Monster auf dieser Ebene")
+  Endif
+Endif 
+
+If Ebene[5] = -1 Then
+  If Ebene[6] = 0 then
+  ElseIf Ebene[6] > 0 then 
+    TextWindow.WriteLine("")
+    TextWindow.WriteLine("Es sind noch " + Ebene[6] + " Monster auf dieser Ebene")
+  Endif
+Endif
 ' https://ebio.gg/@Nia
 ' https://github.com/Ichkanneshalt27
 
@@ -207,7 +264,8 @@ If Stats["Hp"] <= 0 Then
   TextWindow.WriteLine("Ja")
   TextWindow.WriteLine("Nein")
   again = TextWindow.Read()
-  If again = "Ja" or "ja" then
+  again = Text.ConvertToLowerCase(again)
+  If again = "ja" then
     Program.Delay(70)  
     TextWindow.WriteLine("Ebenen werde geputzt") 
     Program.Delay(120)
@@ -227,7 +285,7 @@ If Ebene[1] = 0 then
   TextWindow.WriteLine("Boss der ersten Ebene erscheint!")
   TextWindow.WriteLine("")
   Boss1()
-  TextWindow.WriteLine("Boss " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
+  TextWindow.WriteLine("Bos: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
   Goto Booss
 Endif
 
@@ -236,7 +294,7 @@ If Ebene[2] = 0 Then
   TextWindow.WriteLine("Der Boss der zweiten Ebene erscheint!")
   TextWindow.WriteLine("")
   Boss2()
-  TextWindow.WriteLine("Boss " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
+  TextWindow.WriteLine("Boss: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
   Goto Booss
 EndIf
 
@@ -245,18 +303,45 @@ If Ebene[3] = 0 Then
   TextWindow.WriteLine("Der Boss der dritten Ebene erscheint!")
   TextWindow.WriteLine("")
   Boss3()
-  TextWindow.WriteLine("Boss " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
+  TextWindow.WriteLine("Boss: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
   Goto Booss
 EndIf
 
 If Ebene[4] = 0 Then
   TextWindow.WriteLine("")
-  TextWindow.WriteLine("Ebene 4 bezwungen!")
-  TextWindow.WriteLine("Das ist das Ende für jetzt!")
+  TextWindow.WriteLine("Der Boss der vierten Ebene erscheint!")
+  TextWindow.WriteLine("")
+  Boss4()
+  TextWindow.WriteLine("Boss: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
+  Goto Booss
+EndIf
+
+If Ebene[5] = 0 Then
+  TextWindow.WriteLine("")
+  TextWindow.WriteLine("Der Boss der fünften Ebene erscheint!")
+  TextWindow.WriteLine("")
+  Boss5()
+  TextWindow.WriteLine("Boss: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
+  Goto Booss
+EndIf
+
+If Ebene[6] = 0 Then
+  TextWindow.WriteLine("")
+  TextWindow.WriteLine("Der Endboss des Dungeon erscheint!")
+  TextWindow.WriteLine("")
+  Boss6()
+  TextWindow.WriteLine("Boss: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
+  Goto Booss
+EndIf
+
+If Ebene[7] = 0 Then
+  TextWindow.WriteLine("")
+  TextWindow.WriteLine("Herzlichen Glückwunsch!")
+  TextWindow.WriteLine("Du hast das Spiel durch!")
   TextWindow.WriteLine("Toll gemacht!")
   TextWindow.WriteLine("Schau doch auf: https://ebio.gg/@Nia vorbei")
   Program.Delay(500000)
-  Boss4()
+  Boss7()
   Goto End1
 EndIf
 
@@ -276,10 +361,10 @@ TextWindow.WriteLine("'Gegner")
 TextWindow.WriteLine("'Weglaufen")
 TextWindow.WriteLine("")
 Akt = TextWindow.Read()
-Text.ConvertToLowerCase(Akt)
+Akt = Text.ConvertToLowerCase(Akt)
 TextWindow.WriteLine("")
 
-If Akt = "Angriff" Then
+If Akt = "angriff" Then
   Program.Delay(50)
   Ki()
   
@@ -344,7 +429,7 @@ If Akt = "Angriff" Then
   TextWindow.ForegroundColor = "White"
   Program.Delay(40)
   Goto aktloop
-ElseIf Akt = "Zauber" then  
+ElseIf Akt = "zauber" then  
   Program.Delay(50)
   TextWindow.WriteLine("'Heilen: 25 Mana")
   TextWindow.WriteLine("'Feuerball: 10 Mana")
@@ -352,8 +437,8 @@ ElseIf Akt = "Zauber" then
   TextWindow.WriteLine("")
   TextWindow.WriteLine("Dein Mana: " + Stats["Mana"])
   Zauber = TextWindow.Read()
-  Text.ConvertToLowerCase(Zauber)
-  If Zauber = "Heilen" then 
+  Zauber = Text.ConvertToLowerCase(Zauber)
+  If Zauber = "heilen" then 
     If Stats["Mana"] < 25 then 
       Program.Delay(50)
       TextWindow.ForegroundColor = "lightgray"
@@ -416,7 +501,7 @@ ElseIf Akt = "Zauber" then
       Goto aktloop
     Endif
     Goto aktloop  
-  Elseif  Zauber = "Feuerball" then 
+  Elseif  Zauber = "feuerball" then 
     If Stats["Mana"] < 10 then 
       Program.Delay(50)
       TextWindow.ForegroundColor = "lightgray"
@@ -501,17 +586,18 @@ ElseIf Akt = "Zauber" then
     ' https://github.com/Ichkanneshalt27
   EndIf
   
-Elseif  Akt = "Verteidigen" then
+Elseif  Akt = "verteidigen" then
   Program.Delay(50)
   Ki()
   TextWindow.WriteLine(Player["Name"] + " Verteidigt sich und regeneriert etwas Mana")
   TextWindow.WriteLine(Player["Name"] + " Blockt " + Stats["Block"] + " Schaden")
-  TextWindow.WriteLine(Player["Name"] + " regeneriert 10 Mana")
-  TextWindow.WriteLine("")
-  Stats["Mana"] = Stats["Mana"] + 10
+  Stats["Manareg"] = Stats["Mana"] + 14 + Stats["Level"]
+  Stats["Mana"] = Stats["Mana"] + 14 + Stats["Level"]
   If Stats["Mana"] > Stats["MaxMana"] then  
     Stats["Mana"] = Stats["MaxMana"]
   EndIf
+  TextWindow.WriteLine(Player["Name"] + " regeneriert " + Stats["Manareg"] + "Mana")
+  TextWindow.WriteLine("")
   Program.Delay(50)
   TextWindow.ForegroundColor = "darkgray"
   TextWindow.WriteLine("")
@@ -531,7 +617,7 @@ Elseif  Akt = "Verteidigen" then
   TextWindow.WriteLine("")
   Goto aktloop
   
-Elseif  Akt = "Status" then
+Elseif  Akt = "status" then
   Program.Delay(50)
   TextWindow.ForegroundColor = "Cyan"
   TextWindow.WriteLine("Name: " + Player["Name"])
@@ -548,18 +634,18 @@ Elseif  Akt = "Status" then
   TextWindow.WriteLine("")
   TextWindow.ForegroundColor = "White"
   Goto aktloop  
-Elseif Akt = "Gegner" then
+Elseif Akt = "gegner" then
   Program.Delay(50)
   TextWindow.ForegroundColor = "Blue"
   TextWindow.WriteLine("Name: " + Monster["Farbe"] + " " + Monster["Name"])
   TextWindow.WriteLine("Hp: " + Monster["Hp"] + "/" + Monster["MaxHp"])
   Program.Delay(30)
   TextWindow.WriteLine("Stärke: " + Monster["Angriff2"])
-TextWindow.WriteLine("Beschreibung: " + Monster["Beschreibung"])
+  TextWindow.WriteLine("Beschreibung: " + Monster["Beschreibung"])
   TextWindow.ForegroundColor = "White"
   TextWindow.WriteLine("")
   Goto aktloop
-Elseif  Akt = "Weglaufen" then
+Elseif  Akt = "weglaufen" then
   Program.Delay(50)  
   If Boss["Flag"] > 1 then  
     TextWindow.WriteLine(Player["Name"] + " kann nicht vor dem Boss wegrennen")
@@ -583,9 +669,9 @@ Elseif  Akt = "Weglaufen" then
     TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint")
   EndIf
   Goto aktloop 
-Elseif  Akt = "End" then
+Elseif  Akt = "end" then
   Program.End()
-Elseif  Akt = "Trans" then
+Elseif  Akt = "trans" then
   TextWindow.ForegroundColor = "Magenta"
   TextWindow.WriteLine("||||||||||||||||||||||||")
   TextWindow.WriteLine("||||||||||||||||||||||||")
@@ -602,6 +688,14 @@ Elseif  Akt = "Trans" then
   TextWindow.WriteLine("||||||||||||||||||||||||")
   TextWindow.WriteLine("||||||||||||||||||||||||")
   TextWindow.ForegroundColor = "White"
+  Goto aktloop
+ElseIf Akt = "info" then  
+  TextWindow.ForegroundColor = 13
+  TextWindow.WriteLine("V0.8.4")
+  TextWindow.WriteLine("1300+ Zeilen Code")
+  TextWindow.WriteLine("Sämtliche Links von mir findest du unter:")
+  TextWindow.WriteLine("https://ebio.gg/@Nia")
+  TextWindow.ForegroundColor = "white"
   Goto aktloop
 Else
   Program.Delay(50)
@@ -982,6 +1076,31 @@ Sub Ki
       Monster["Angriff"] = Monster["Angriff2"]
     EndIf
   EndIf
+  
+  Monster["check"] = Monster["MaxHp"] * 0.40
+  If Monster["Hp"] < Monster["check"] Then
+    Roll = Math.GetRandomNumber(8)
+    If Roll = 1 Then
+      Monster["Angriff2"] = Monster["Angriff2"] - 1
+    ElseIf Roll = 2 then
+      Attack = 0
+      Mheal = Math.GetRandomNumber(4)
+      Monster["Warten"] = Monster["Angriff2"] + Mheal
+    ElseIf Roll = 3 then  
+      Monster["Angriff"] = Monster["Angriff2"]
+    ElseIf Roll = 4 then  
+      Monster["Angriff"] = Monster["Angriff2"] - 1
+    ElseIf  Roll = 5 then 
+      Monster["Angriff"] = Monster["Angriff2"] + 1
+    ElseIf Roll = 6Then  
+      Monster["Angriff"] = Monster["Angriff2"]
+    ElseIf Roll = 7 then  
+      Monster["Angriff"] = Monster["Angriff2"] + 1
+    ElseIf Roll = 8 Then  
+      Monster["Angriff"] = Monster["Angriff2"]
+    EndIf
+  EndIf
+  
   If Monster["Flag"] = 1 Then
     Roll = Math.GetRandomNumber(3)
     If Roll = 1 Then
@@ -1088,6 +1207,59 @@ Sub RandoMon
       Monster24()
     EndIf
   EndIf
+  
+  If Ebene["Flag"] = 5 Then
+    Mo = Math.GetRandomNumber(9)
+    If Mo = 1 Then
+      Monster15()
+    ElseIf Mo = 2 then  
+      Monster13()
+    Elseif Mo = 3 then  
+      Monster16()
+    Elseif Mo = 4 then  
+      Monster17()
+    Elseif Mo = 5 then
+      Monster20()
+    Elseif Mo = 6 then
+      Monster21()
+    Elseif Mo = 7 then
+      Monster22()
+    Elseif Mo = 8 then
+      Monster23()
+    Elseif Mo = 9 then
+      Monster24()
+    EndIf
+  EndIf
+  
+  If Ebene["Flag"] = 6 Then
+    Mo = Math.GetRandomNumber(9)
+    If Mo = 1 Then
+      Monster15()
+    ElseIf Mo = 2 then  
+      Monster13()
+    Elseif Mo = 3 then  
+      Monster16()
+    Elseif Mo = 4 then  
+      Monster17()
+    Elseif Mo = 5 then
+      Monster20()
+    Elseif Mo = 6 then
+      Monster21()
+    Elseif Mo = 7 then
+      Monster22()
+    Elseif Mo = 8 then
+      Monster23()
+    Elseif Mo = 9 then
+      Monster24()
+    EndIf
+  EndIf
+  
+  Room = Math.GetRandomNumber(50)
+  If Room = 1 Then
+  ElseIf Room = 2 then  
+  ElseIf Room = 3 then 
+  EndIf
+  
 EndSub
 
 Sub Boss1
@@ -1147,14 +1319,47 @@ Sub Boss4
   Monster["Angriff2"] = 9 + Stats["Lvl"]
   Monster["Weglaufen"] = 100000
   Monster["Xp"] = 100
-  Monster["Beschreibung"] = ""
+  Monster["Beschreibung"] = "Hat wer räucherstäbchen und ein EMF Gerät?"
   Boss["Flag"] = 4
   Ebene["Flag"] = 5
-  Ebene[3] = -1
+  Ebene[4] = -1
   Ebene["Stage"] = 4
 EndSub
 
 Sub Boss5
+  Monster["Farbe"] = "-"
+  Monster["Name"] = "-"
+  Monster["Hp"] = 100 + Stats["Lvl"]
+  Monster["MaxHp"] = 100 + Stats["Lvl"]
+  Monster["Angriff"] = 10 + Stats["Lvl"]
+  Monster["Angriff2"] = 10 + Stats["Lvl"]
+  Monster["Weglaufen"] = 100000
+  Monster["Xp"] = 1
+  Monster["Beschreibung"] = ""
+  Boss["Flag"] = 5
+  Ebene["Flag"] = 6
+  Ebene[5] = -1
+  Ebene["Stage"] = 5
+EndSub
+
+Sub Boss6
+  Monster["Farbe"] = "-"
+  Monster["Name"] = "-"
+  Endboss = Stats["Lvl"] * 2
+  Monster["Hp"] = 100 + Endboss
+  Monster["MaxHp"] = 100 + Endboss
+  Monster["Angriff"] = 10 + Stats["Lvl"]
+  Monster["Angriff2"] = 10 + Stats["Lvl"]
+  Monster["Weglaufen"] = 100000
+  Monster["Xp"] = 1
+  Monster["Beschreibung"] = ""
+  Boss["Flag"] = 6
+  Ebene["Flag"] = 7
+  Ebene[6] = -1
+  Ebene["Stage"] = 6
+EndSub
+
+Sub Boss7
   Monster["Farbe"] = "Placeholder"
   Monster["Name"] = "Meow"
   Monster["Hp"] = 1
@@ -1164,10 +1369,10 @@ Sub Boss5
   Monster["Weglaufen"] = 100000
   Monster["Xp"] = 1
   Monster["Beschreibung"] = ""
-  Boss["Flag"] = 4
-  Ebene["Flag"] = 5
+  Boss["Flag"] = 1
+  Ebene["Flag"] = 1
   Ebene[3] = -1
-  Ebene["Stage"] = 4
+  Ebene["Stage"] = 1
 EndSub
 
 End1:

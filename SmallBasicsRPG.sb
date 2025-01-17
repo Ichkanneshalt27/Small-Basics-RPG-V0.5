@@ -12,7 +12,7 @@ Stats["MaxHp"] = 100
 Stats["Mana"] = 50
 Stats["MaxMana"] = 50
 Stats["Angriff"] = 5
-Stats["Block"] = 3
+Stats["Block"] = 4
 Stats["Feuerball"] = 8
 Stats["Heilung"] = 15
 Stats["Xp"] = 0
@@ -52,6 +52,8 @@ TextWindow.WriteLine("Du startest dein Arbentuer in einem alten Verlies.")
 RandoMon()
 TextWindow.WriteLine("") 
 TextWindow.WriteLine("Ein " + Monster["Farbe"] + " " + Monster["Name"] + " erscheint.")
+
+randomroom()
 
 aktloop:
 
@@ -145,6 +147,7 @@ If Monster["Hp"] <= 0 then
     TextWindow.WriteLine(Player["Name"] + " hat " + Monster["Farbe"] + " " + Monster["Name"] + " besiegt")
     TextWindow.WriteLine(Player["Name"] + " bekommt " + Monster["Xp"] + "Xp")
     Stats["Xp"] = Stats["Xp"] + Monster["Xp"]
+  EndIf
     If Stats["Xp"] >= Stats["mXP"] then 
       TextWindow.WriteLine("")
       TextWindow.WriteLine(Player["Name"] + " ist ein Level aufgestiegen!")
@@ -154,9 +157,9 @@ If Monster["Hp"] <= 0 then
       Stats["Mana"] = Stats["Mana"] + 5
       Stats["MaxMana"] = Stats["MaxMana"] + 5
       Stats["Angriff"] = Stats["Angriff"] + 1
+      Stats["Block"] = Stats["Block"] + 1
       Stats["Feuerball"] = Stats["Feuerball"] + 2
       Stats["Heilung"] = Stats["Heilung"] + 4
-      Stats["Block"] = Stats["Block"] + 1
       Stats["Xp"] = Stats["Xp"] - Stats["mXp"]
       Stats["mXp"] = Stats["mXp"] + 4 + Stats["Lvl"]
       Stats["Lvl"] = Stats["Lvl"] + 1
@@ -226,7 +229,6 @@ If Monster["Hp"] <= 0 then
       TextWindow.WriteLine("Es sind noch " + Ebene[3] + " Monster auf dieser Ebene")
     Endif
   Endif  
-Endif 
 
 If Ebene[3] = -1 Then
   If Ebene[4] = 0 then
@@ -287,54 +289,42 @@ If Ebene[1] = 0 then
   Boss1()
   TextWindow.WriteLine("Bos: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
   Goto Booss
-Endif
-
-If Ebene[2] = 0 Then
+ElseIf Ebene[2] = 0 Then
   TextWindow.WriteLine("")
   TextWindow.WriteLine("Der Boss der zweiten Ebene erscheint!")
   TextWindow.WriteLine("")
   Boss2()
   TextWindow.WriteLine("Boss: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
   Goto Booss
-EndIf
-
-If Ebene[3] = 0 Then
+ElseIf Ebene[3] = 0 Then
   TextWindow.WriteLine("")
   TextWindow.WriteLine("Der Boss der dritten Ebene erscheint!")
   TextWindow.WriteLine("")
   Boss3()
   TextWindow.WriteLine("Boss: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
   Goto Booss
-EndIf
-
-If Ebene[4] = 0 Then
+ElseIf Ebene[4] = 0 Then
   TextWindow.WriteLine("")
   TextWindow.WriteLine("Der Boss der vierten Ebene erscheint!")
   TextWindow.WriteLine("")
   Boss4()
   TextWindow.WriteLine("Boss: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
   Goto Booss
-EndIf
-
-If Ebene[5] = 0 Then
+ElseIf Ebene[5] = 0 Then
   TextWindow.WriteLine("")
   TextWindow.WriteLine("Der Boss der fünften Ebene erscheint!")
   TextWindow.WriteLine("")
   Boss5()
   TextWindow.WriteLine("Boss: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
   Goto Booss
-EndIf
-
-If Ebene[6] = 0 Then
+ElseIf  Ebene[6] = 0 Then
   TextWindow.WriteLine("")
   TextWindow.WriteLine("Der Endboss des Dungeon erscheint!")
   TextWindow.WriteLine("")
   Boss6()
   TextWindow.WriteLine("Boss: " + Monster["Farbe"] + " " + Monster["Name"] + " steht vor dir!")
   Goto Booss
-EndIf
-
-If Ebene[7] = 0 Then
+ElseIf Ebene[7] = 0 Then
   TextWindow.WriteLine("")
   TextWindow.WriteLine("Herzlichen Glückwunsch!")
   TextWindow.WriteLine("Du hast das Spiel durch!")
@@ -367,7 +357,6 @@ TextWindow.WriteLine("")
 If Akt = "angriff" Then
   Program.Delay(50)
   Ki()
-  
   If Attack = -1 Then 
     TextWindow.ForegroundColor = "Darkgray"
     Program.Delay(50)
@@ -591,8 +580,8 @@ Elseif  Akt = "verteidigen" then
   Ki()
   TextWindow.WriteLine(Player["Name"] + " Verteidigt sich und regeneriert etwas Mana")
   TextWindow.WriteLine(Player["Name"] + " Blockt " + Stats["Block"] + " Schaden")
-  Stats["Manareg"] = Stats["Mana"] + 14 + Stats["Level"]
-  Stats["Mana"] = Stats["Mana"] + 14 + Stats["Level"]
+  Stats["Manareg"] = 14 + Stats["Lvl"]
+  Stats["Mana"] = Stats["Mana"] + Stats["Manareg"]
   If Stats["Mana"] > Stats["MaxMana"] then  
     Stats["Mana"] = Stats["MaxMana"]
   EndIf
@@ -737,8 +726,8 @@ Sub Monster3
   Monster["Name"] = "Ork"
   Monster["Hp"] = 14
   Monster["MaxHp"] = 14
-  Monster["Angriff"] = 6
-  Monster["Angriff2"] = 6
+  Monster["Angriff"] = 5
+  Monster["Angriff2"] = 5
   Monster["Weglaufen"] = 4
   Monster["Xp"] = 6
   Monster["Beschreibung"] = "Stärker als der Grüne Ork."
@@ -777,7 +766,7 @@ Sub Monster6
   Monster["Angriff2"] = 5
   Monster["Weglaufen"] = 2
   Monster["Xp"] = 6
-  Monster["Beschreibung"] = "Hat vielleicht zu viel Valorant gespielt"
+  Monster["Beschreibung"] = "Hat vielleicht zu viel Valorant gespielt."
 EndSub
 
 Sub Monster7
@@ -797,34 +786,34 @@ Sub Monster8
   Monster["Name"] = "Siedler"
   Monster["Hp"] = 14
   Monster["MaxHp"] = 14
-  Monster["Angriff"] = 7
-  Monster["Angriff2"] = 7
+  Monster["Angriff"] = 6
+  Monster["Angriff2"] = 6
   Monster["Weglaufen"] = 5
-  Monster["Xp"] = 7
+  Monster["Xp"] = 8
   Monster["Beschreibung"] = "Leagu of Legens Spieler."
 EndSub
 
 Sub Monster9
   Monster["Farbe"] = "Wilder"
-  Monster["Name"] = "Tjorben"
+  Monster["Name"] = "Torben"
   Monster["Hp"] = 10
   Monster["MaxHp"] = 10
-  Monster["Angriff"] = 9
-  Monster["Angriff2"] = 9
+  Monster["Angriff"] = 8
+  Monster["Angriff2"] = 8
   Monster["Weglaufen"] = 1
-  Monster["Xp"] = 9
-  Monster["Beschreibung"] = "Hat mich auf Discord zu viel genervt"
+  Monster["Xp"] = 10
+  Monster["Beschreibung"] = "Hat mich auf Discord zu viel genervt."
 EndSub
 
 Sub Monster10
   Monster["Farbe"] = "Blauer"
   Monster["Name"] = "Ork"
-  Monster["Hp"] = 17
-  Monster["MaxHp"] = 17
+  Monster["Hp"] = 14
+  Monster["MaxHp"] = 14
   Monster["Angriff"] = 8
   Monster["Angriff2"] = 8
   Monster["Weglaufen"] = 8
-  Monster["Xp"] = 10
+  Monster["Xp"] = 11
   Monster["Beschreibung"] = "Seltene Art der Orks, ist aber auch stärker!"
 EndSub
 
@@ -845,11 +834,11 @@ Sub Monster12
   Monster["Name"] = "Demon"
   Monster["Hp"] = 20
   Monster["MaxHp"] = 20
-  Monster["Angriff"] = 8
-  Monster["Angriff2"] = 8
+  Monster["Angriff"] = 7
+  Monster["Angriff2"] = 7
   Monster["Weglaufen"] = 6
   Monster["Xp"] = 10
-  Monster["Beschreibung"] = "Zimelich gefährlich."
+  Monster["Beschreibung"] = "Ziemlich gefährlich."
 EndSub
 
 Sub Monster13
@@ -860,15 +849,15 @@ Sub Monster13
   Monster["Angriff"] = 10
   Monster["Angriff2"] = 10
   Monster["Weglaufen"] = 12
-  Monster["Xp"] = 20
+  Monster["Xp"] = 22
   Monster["Beschreibung"] = "Mit seiner Rüstung und Kampf Erfahrung ist es sehr gefährlich."
 EndSub
 
 Sub Monster14
   Monster["Farbe"] = "schneller"
   Monster["Name"] = "Bandit"
-  Monster["Hp"] = 17
-  Monster["MaxHp"] = 17
+  Monster["Hp"] = 13
+  Monster["MaxHp"] = 13
   Monster["Angriff"] = 8
   Monster["Angriff2"] = 8
   Monster["Weglaufen"] = 17
@@ -891,12 +880,12 @@ EndSub
 Sub Monster16
   Monster["Farbe"] = "Blut lustige"
   Monster["Name"] = "Spinne"
-  Monster["Hp"] = 28
-  Monster["MaxHp"] = 28
+  Monster["Hp"] = 24
+  Monster["MaxHp"] = 24
   Monster["Angriff"] = 8
   Monster["Angriff2"] = 8
   Monster["Weglaufen"] = 18
-  Monster["Xp"] = 13
+  Monster["Xp"] = 14
   Monster["Beschreibung"] = "Mehr als 2m groß am besten mit Feuer arbeiten."
 EndSub
 
@@ -905,22 +894,22 @@ Sub Monster17
   Monster["Name"] = "Mimik"
   Monster["Hp"] = 35
   Monster["MaxHp"] = 35
-  Monster["Angriff"] = 14
-  Monster["Angriff2"] = 14
+  Monster["Angriff"] = 13
+  Monster["Angriff2"] = 13
   Monster["Weglaufen"] = 0
-  Monster["Xp"] = 16
+  Monster["Xp"] = 18
   Monster["Beschreibung"] = "Sehr leicht zum weglaufen."
 EndSub
 
 Sub Monster18
   Monster["Farbe"] = "giftiges"
   Monster["Name"] = "monster Brot"
-  Monster["Hp"] = 22
-  Monster["MaxHp"] = 22
+  Monster["Hp"] = 18
+  Monster["MaxHp"] = 18
   Monster["Angriff"] = 8
   Monster["Angriff2"] = 8
   Monster["Weglaufen"] = 0
-  Monster["Xp"] = 8
+  Monster["Xp"] = 9
   Monster["Beschreibung"] = "Vom Schimmel lebendig geworden."
 EndSub
 
@@ -932,7 +921,7 @@ Sub Monster19
   Monster["Angriff"] = 7
   Monster["Angriff2"] = 7
   Monster["Weglaufen"] = 8
-  Monster["Xp"] = 8
+  Monster["Xp"] = 11
   Monster["Beschreibung"] = "Trainiert sehr viel."
 EndSub
 
@@ -944,8 +933,8 @@ Sub Monster20
   Monster["Angriff"] = 5
   Monster["Angriff2"] = 5
   Monster["Weglaufen"] = 1
-  Monster["Xp"] = 10
-  Monster["Beschreibung"] = "Stärkere Version vom normalen Zombie"
+  Monster["Xp"] = 12
+  Monster["Beschreibung"] = "Stärkere Version vom normalen Zombie."
 EndSub
 
 Sub Monster21
@@ -956,7 +945,7 @@ Sub Monster21
   Monster["Angriff"] = 12
   Monster["Angriff2"] = 12
   Monster["Weglaufen"] = 2
-  Monster["Xp"] = 16
+  Monster["Xp"] = 18
   Monster["Beschreibung"] = "Bleibt lieber bei seinem Ort."
 EndSub
 
@@ -980,21 +969,21 @@ Sub Monster23
   Monster["Angriff"] = 1
   Monster["Angriff2"] = 1
   Monster["Weglaufen"] = 1
-  Monster["Xp"] = 14
+  Monster["Xp"] = 16
   Monster["Flag"] = 1
   Monster["Beschreibung"] = "Würfelt mit einem D20 seine Stats."
 EndSub
 
 Sub Monster24
-  Monster["Farbe"] = "-"
-  Monster["Name"] = "Ork"
-  Monster["Hp"] = 25
-  Monster["MaxHp"] = 25
-  Monster["Angriff"] = 8
-  Monster["Angriff2"] = 8
+  Monster["Farbe"] = "Silberne, Blauäugige"
+  Monster["Name"] = "Schlange"
+  Monster["Hp"] = 18
+  Monster["MaxHp"] = 18
+  Monster["Angriff"] = 10
+  Monster["Angriff2"] = 10
   Monster["Weglaufen"] = 12
-  Monster["Xp"] = 11
-  Monster["Beschreibung"] = ""
+  Monster["Xp"] = 13
+  Monster["Beschreibung"] = "Sehr schön und elegant, wird dich aber umbringen."
 EndSub
 
 Sub Placeholder
@@ -1002,11 +991,11 @@ Sub Placeholder
   Monster["Name"] = "Placeholder"
   Monster["Hp"] = 20
   Monster["MaxHp"] = 20
-  Monster["Angriff"] = 8
-  Monster["Angriff2"] = 8
-  Monster["Weglaufen"] = 18
-  Monster["Xp"] = 12
-  Monster["Beschreibung"] = ""
+  Monster["Angriff"] = 5
+  Monster["Angriff2"] = 5
+  Monster["Weglaufen"] = 10
+  Monster["Xp"] = 10
+  Monster["Beschreibung"] = "Placeholder .Falls du das siehst solltest du das nicht sehen. Placeholder"
 EndSub
 
 Sub Ki
@@ -1069,7 +1058,7 @@ Sub Ki
     ElseIf  Roll = 5 then 
       Monster["Angriff"] = Monster["Angriff2"] + 1
     ElseIf Roll = 6 then  
-      Monster["Angriff"] = Monster["Angriff2"] + 2
+      Monster["Angriff"] = Monster["Angriff2"] + 1
     Elseif Roll = 7 Then  
       Monster["Angriff"] = Monster["Angriff2"]
     Elseif Roll = 8 Then 
@@ -1119,7 +1108,6 @@ Sub Ki
 EndSub
 
 Sub RandoMon
-  Boss["Flag"] = 0
   If Ebene["Flag"] = 1 Then
     Mo = Math.GetRandomNumber(6)
     If Mo = 1 Then
@@ -1188,9 +1176,9 @@ Sub RandoMon
   If Ebene["Flag"] = 4 Then
     Mo = Math.GetRandomNumber(9)
     If Mo = 1 Then
-      Monster15()
-    ElseIf Mo = 2 then  
       Monster13()
+    ElseIf Mo = 2 then  
+      Monster15()
     Elseif Mo = 3 then  
       Monster16()
     Elseif Mo = 4 then  
@@ -1211,9 +1199,9 @@ Sub RandoMon
   If Ebene["Flag"] = 5 Then
     Mo = Math.GetRandomNumber(9)
     If Mo = 1 Then
-      Monster15()
-    ElseIf Mo = 2 then  
       Monster13()
+    ElseIf Mo = 2 then  
+      Monster15()
     Elseif Mo = 3 then  
       Monster16()
     Elseif Mo = 4 then  
@@ -1253,11 +1241,17 @@ Sub RandoMon
       Monster24()
     EndIf
   EndIf
+EndSub
+
+Sub randomroom
   
   Room = Math.GetRandomNumber(50)
   If Room = 1 Then
+    'Ausruhraum
   ElseIf Room = 2 then  
+    'special Ausruhraum glaub kp
   ElseIf Room = 3 then 
+    'vielleicht fallen raum kp hab das nicht ganz durchdacht lol
   EndIf
   
 EndSub
